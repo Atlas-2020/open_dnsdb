@@ -16,6 +16,7 @@ CONF = cfg.CONF
 
 def send_email(subject, content, sender=None, receivers=None):
     s = smtplib.SMTP()
+    msg = ''
     try:
         if content is None:
             content = ""
@@ -37,7 +38,7 @@ def send_email(subject, content, sender=None, receivers=None):
         s.connect(CONF.MAIL.server, CONF.MAIL.port)
         s.sendmail(sender, to_list, msg.as_string())
     except Exception as e:
-        log.error("Failed to send email:%s, because: %s" % (msg, e.message))
+        log.error("Failed to send email:%s, because: %s" % (msg, e))
     finally:
         s.close()
 

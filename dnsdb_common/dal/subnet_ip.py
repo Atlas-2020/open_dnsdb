@@ -76,6 +76,8 @@ class SubnetIpDal(object):
                 'region': region,
                 'fixed_ip': str(i)
             })
+        if Subnets.query.filter_by(region_name=region).first():
+            raise BadParam('region already exist', msg_ch='网段名已存在')
         try:
             with db.session.begin(subtransactions=True):
                 subnet_item = Subnets(
